@@ -15,8 +15,10 @@
  */
 package io.netty.example.discard;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.util.ReferenceCountUtil;
 
 /**
  * Handles a server-side channel.
@@ -26,6 +28,11 @@ public class DiscardServerHandler extends SimpleChannelInboundHandler<Object> {
     @Override
     public void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
         // discard
+        ((ByteBuf) msg).release();
+        //通常来说，需要肩负起释放引用计数的对象的责任
+        // try () catch {
+        //      ReferenceCountUtil.release(msg);
+        // }
     }
 
     @Override

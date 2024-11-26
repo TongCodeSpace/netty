@@ -38,15 +38,21 @@ public final class DiscardServer {
     public static void main(String[] args) throws Exception {
         // Configure SSL.
         final SslContext sslCtx = ServerUtil.buildSslContext();
-
+        // NioEventLoopGroup 是一个能够处理 IO 操作的多线程循环
+        // boss 接收客户端连接
+        // worker 负责进行处理由 boss 分发下来的连接
         EventLoopGroup bossGroup = new NioEventLoopGroup(1);
         EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
+            // ServerBootstrap 用于快速启动服务，但是通常来说不这么做
             ServerBootstrap b = new ServerBootstrap();
             b.group(bossGroup, workerGroup)
-             .channel(NioServerSocketChannel.class)
+             .channel(NioServerSocketChannel.class)//实例化一个 channel 用于接收连接
+                    // .option() 可以用于配置 boss 的 channel
+                    // .childOption()
              .handler(new LoggingHandler(LogLevel.INFO))
              .childHandler(new ChannelInitializer<SocketChannel>() {
+                 // 将始终由新的 channel 进行分配
                  @Override
                  public void initChannel(SocketChannel ch) {
                      ChannelPipeline p = ch.pipeline();

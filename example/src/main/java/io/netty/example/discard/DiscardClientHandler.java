@@ -34,10 +34,10 @@ public class DiscardClientHandler extends SimpleChannelInboundHandler<Object> {
         this.ctx = ctx;
 
         // Initialize the message.
-        content = ctx.alloc().directBuffer(DiscardClient.SIZE).writeZero(DiscardClient.SIZE);
+        content = ctx.alloc().directBuffer(DiscardClient.SIZE).writeBoolean(Boolean.FALSE);
 
         // Send the initial messages.
-        generateTraffic();
+        //generateTraffic();
     }
 
     @Override

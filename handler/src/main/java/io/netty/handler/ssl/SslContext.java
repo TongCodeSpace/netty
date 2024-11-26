@@ -73,6 +73,7 @@ import java.util.concurrent.Executor;
 /**
  * A secure socket protocol implementation which acts as a factory for {@link SSLEngine} and {@link SslHandler}.
  * Internally, it is implemented via JDK's {@link SSLContext} or OpenSSL's {@code SSL_CTX}.
+ * 上文的大致意思：
  *
  * <h3>Making your server support SSL/TLS</h3>
  * <pre>
